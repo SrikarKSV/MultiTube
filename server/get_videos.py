@@ -20,8 +20,10 @@ def get_playlist_videos(playlist_id: str):
     for video_id in playlist_data["items"]:
         video_id = video_id["contentDetails"]["videoId"]
         video_ids.append("https://www.youtube.com/watch?v=" + video_id)
+    
+    next_page_token = playlist_data.get("nextPageToken")
 
-    return video_ids
+    return {"video_ids": video_ids, "nextPageToken":next_page_token}
 
 
 def get_channel_videos(channel_id: str):
@@ -38,3 +40,5 @@ def get_channel_videos(channel_id: str):
     upload_id = r.json()[
         "items"][0]["contentDetails"]["relatedPlaylists"]["uploads"]
     videos_ids = get_playlist_videos(upload_id)
+
+    return videos_ids
