@@ -22,7 +22,7 @@ class GetVideoId:
             video_ids = []
             for video_id in playlist_data["items"]:
                 video_id = video_id["contentDetails"]["videoId"]
-                video_ids.append("https://www.youtube.com/watch?v=" + video_id)
+                video_ids.append(video_id)
 
             next_page_token = playlist_data.get("nextPageToken")
 
