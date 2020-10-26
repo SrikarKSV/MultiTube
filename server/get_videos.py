@@ -32,7 +32,11 @@ class GetVideoId:
             return {"error": error_code}
 
     def get_channel_videos(self, channel_id: str, next_page_token: str) -> dict:
-        id = "id" if channel_id[:2] == "UC" else "forUsername"
+        try:
+            id = "id" if channel_id[:2] == "UC" else "forUsername"
+        except TypeError:
+            return {"error": "Please provide a channel ID"}
+        
         params = {
             "key": self.API_KEY,
             id: channel_id,
