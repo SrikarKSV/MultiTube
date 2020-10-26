@@ -4,7 +4,9 @@ const videoSection = document.querySelector(".videos");
 videoBtn.addEventListener("click", handleVideoBtn);
 
 function handleVideoBtn() {
-  const videoLinks = document.querySelector(".link-field").value.split(",");
+  const inputField = document.querySelector(".link-field");
+  if (!inputField.length > 1) return;
+  videoLinks = inputField.value.split(",");
   videoLinks.forEach((videoLink) => {
     videoLink = videoLink.trim();
     const videoId = videoLink.split("=")[1].split("&")[0];
