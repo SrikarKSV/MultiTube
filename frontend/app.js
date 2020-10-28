@@ -2,7 +2,7 @@ const videoBtn = document.querySelector(".get-video-btn");
 const videoSection = document.querySelector(".videos");
 const moreBtn = document.querySelector(".more");
 const youtubeLinkRegex = /^(https:\/\/)?(www\.)?youtube\.com\/(watch\?v=\w|playlist\?list=\w|channel\/\w)/;
-const idList = [];
+let idList = [];
 let currentNextPageToken = null;
 
 videoBtn.addEventListener("click", handleVideoBtn);
@@ -12,6 +12,7 @@ function handleVideoBtn() {
   const inputValue = document.querySelector(".link-field").value;
   if (!inputValue.length) return;
   currentNextPageToken = null;
+  idList = [];
 
   inputLinks = inputValue.split(",");
   inputLinks.forEach((inputLink) => {
@@ -65,9 +66,18 @@ async function getChannelOrPlaylistVideos(category, id, nextPageToken) {
     videoSection.appendChild(iframHtmlFragment);
   });
   console.log(currentNextPageToken);
-  currentNextPageToken
-    ? (moreBtn.style.display = "block")
-    : (moreBtn.style.display = "none");
+  if (currentNextPageToken) {
+    moreBtn.style.display = "block";
+  } else {
+    if (idList.length > 1) {
+      moreBtn.style.display = "block";
+      currentNextPageToken = null;
+      idList.shift();
+      console.log(idList);
+    } else {
+      moreBtn.style.display = "none";
+    }
+  }
 }
 
 function channelLinkIframes(channelLink, nextPageToken) {
