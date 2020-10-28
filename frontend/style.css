@@ -20,6 +20,13 @@
   --font-regular: "Gontserrat Regular";
   --font-light: "Gontserrat Light";
   --text-field-width: 40rem;
+  --button-bg: #fbf7f0;
+  --button-border-radius: 8px;
+  --box-shadow-color: #555555;
+}
+
+body {
+  background: #d9e4dd;
 }
 
 header {
@@ -36,6 +43,7 @@ h1 {
   font-size: var(--font-size-header);
   margin: 2.5rem 0 3rem;
   font-family: var(--font-regular);
+  text-shadow: 2px 3px rgba(0, 0, 0, 0.5);
 }
 
 .link-field {
@@ -50,8 +58,8 @@ h1 {
   cursor: pointer;
   margin-top: 2.8rem;
   padding: 0.5em;
-  background-color: #f6f6f6;
-  border-radius: 8px;
+  background-color: var(--button-bg);
+  border-radius: var(--button-border-radius);
   font-size: var(--font-size-body);
   font-family: var(--font-regular);
 }
@@ -80,4 +88,22 @@ main {
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+.more {
+  display: block;
+  margin: 0 auto 3rem;
+  border-radius: var(--button-border-radius);
+  font-family: var(--font-regular);
+  background-color: var(--button-bg);
+  font-size: 1.5rem;
+  padding: 0.3em 1em;
+  cursor: pointer;
+  border: 3px solid #555555;
+  transition: box-shadow 0.3s;
+  display: none;
+}
+
+.more:hover {
+  box-shadow: 2.5px 2.2px 1px var(--box-shadow-color);
 }
