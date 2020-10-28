@@ -1,16 +1,19 @@
 const videoBtn = document.querySelector(".get-video-btn");
 const videoSection = document.querySelector(".videos");
-const closeBtn = document.querySelector(".close");
+const closeBtns = document.querySelectorAll(".close");
 const error404Wrapper = document.querySelector(".error-404-container");
+const error403Wrapper = document.querySelector(".error-403-container");
 const moreBtn = document.querySelector(".more");
 const youtubeLinkRegex = /^(https:\/\/)?(www\.)?youtube\.com\/(watch\?v=\w|playlist\?list=\w|channel\/\w)/;
 let idList = [];
 let currentNextPageToken = null;
-const invalidLinks = [];
+let invalidLinks = [];
 
 videoBtn.addEventListener("click", handleVideoBtn);
 moreBtn.addEventListener("click", fetchVideos);
-closeBtn.addEventListener("click", handleCloseBtn);
+closeBtns.forEach((closeBtn) => {
+  closeBtn.addEventListener("click", handleCloseBtn);
+});
 
 function handleVideoBtn() {
   const inputField = document.querySelector(".link-field");
@@ -53,15 +56,17 @@ function fetchVideos() {
 }
 
 function handleCloseBtn() {
+  error403Wrapper.classList.remove("open");
   error404Wrapper.classList.remove("open");
 }
 
-function showInvalidLinks(inavlidLinks) {
+function showInvalidLinks(iLinks) {
   const errorEl = document.querySelector(".error-404-container");
   const invalidLinksUl = document.querySelector(".invalid-link");
-  inavlidLinks.forEach((inavlidLink) => {
+  iLinks.forEach((inavlidLink) => {
     invalidLinksUl.innerHTML += `<li>${inavlidLink}</li>`;
   });
+  invalidLinks = [];
   errorEl.classList.add("open");
 }
 
@@ -97,9 +102,10 @@ async function getChannelOrPlaylistVideos(
     if (Number(errorCode) === 404) {
       showInvalidLinks([directLink]);
       idList.unshift();
+    } else {
+      error403Wrapper.classList.add("open");
     }
   }
-  console.log(currentNextPageToken);
   if (currentNextPageToken) {
     moreBtn.style.display = "block";
   } else {

@@ -124,7 +124,8 @@ main {
 }
 
 /******************************* 404-Error *******************************/
-.error-404-container {
+.error-404-container,
+.error-403-container {
   position: fixed;
   top: 2rem;
   left: 0;
@@ -154,7 +155,8 @@ main {
   font-size: 1rem;
 }
 
-.error-404-container.open {
+.error-404-container.open,
+.error-403-container.open {
   transform: translateY(10%);
 }
 
