@@ -1,15 +1,20 @@
 const videoBtn = document.querySelector(".get-video-btn");
 const videoSection = document.querySelector(".videos");
+const closeBtn = document.querySelector(".close");
+const error404Wrapper = document.querySelector(".error-404-container");
 const moreBtn = document.querySelector(".more");
 const youtubeLinkRegex = /^(https:\/\/)?(www\.)?youtube\.com\/(watch\?v=\w|playlist\?list=\w|channel\/\w)/;
 let idList = [];
 let currentNextPageToken = null;
+const invalidLinks = [];
 
 videoBtn.addEventListener("click", handleVideoBtn);
 moreBtn.addEventListener("click", fetchVideos);
+closeBtn.addEventListener("click", handleCloseBtn);
 
 function handleVideoBtn() {
-  const inputValue = document.querySelector(".link-field").value;
+  const inputField = document.querySelector(".link-field");
+  const inputValue = inputField.value;
   if (!inputValue.length) return;
   currentNextPageToken = null;
   idList = [];
@@ -29,9 +34,11 @@ function handleVideoBtn() {
       console.log(`YES: ${inputLink}`);
     } else {
       console.log(`WRONG: ${inputLink}`);
+      invalidLinks.push(inputLink);
     }
   });
-  console.log(idList);
+  inputField.value = "";
+  invalidLinks.length >= 1 && showInvalidLinks(invalidLinks);
   fetchVideos();
 }
 
@@ -45,26 +52,53 @@ function fetchVideos() {
   }
 }
 
+function handleCloseBtn() {
+  error404Wrapper.classList.remove("open");
+}
+
+function showInvalidLinks(inavlidLinks) {
+  const errorEl = document.querySelector(".error-404-container");
+  const invalidLinksUl = document.querySelector(".invalid-link");
+  inavlidLinks.forEach((inavlidLink) => {
+    invalidLinksUl.innerHTML += `<li>${inavlidLink}</li>`;
+  });
+  errorEl.classList.add("open");
+}
+
 // Fetching and Creating Iframes
-async function getChannelOrPlaylistVideos(category, id, nextPageToken) {
+async function getChannelOrPlaylistVideos(
+  category,
+  id,
+  nextPageToken,
+  directLink
+) {
   const response = await fetch(
     `http://localhost:5000/${category}?id=${id}&nextPageToken=${nextPageToken}`
   );
   const data = await response.json();
-  const videoIds = data.video_ids;
-  currentNextPageToken = data.nextPageToken;
-  videoIds.forEach((videoId) => {
-    const iframeHtml = `<div class="videoWrapper">
+  try {
+    const videoIds = data.video_ids;
+    currentNextPageToken = data.nextPageToken;
+    videoIds.forEach((videoId) => {
+      const iframeHtml = `<div class="videoWrapper">
+                      <p>Loading...</p>
                       <iframe width="560" height="315"
                       src="https://www.youtube.com/embed/${videoId}"
                       frameborder="0" allow="accelerometer; autoplay; clipboard-write;
                       encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                       </div>`;
-    const iframHtmlFragment = document
-      .createRange()
-      .createContextualFragment(iframeHtml);
-    videoSection.appendChild(iframHtmlFragment);
-  });
+      const iframHtmlFragment = document
+        .createRange()
+        .createContextualFragment(iframeHtml);
+      videoSection.appendChild(iframHtmlFragment);
+    });
+  } catch {
+    const errorCode = data.error;
+    if (Number(errorCode) === 404) {
+      showInvalidLinks([directLink]);
+      idList.unshift();
+    }
+  }
   console.log(currentNextPageToken);
   if (currentNextPageToken) {
     moreBtn.style.display = "block";
@@ -82,12 +116,17 @@ async function getChannelOrPlaylistVideos(category, id, nextPageToken) {
 
 function channelLinkIframes(channelLink, nextPageToken) {
   const channelId = channelLink.split("/").slice(-1);
-  getChannelOrPlaylistVideos("channel", channelId, nextPageToken);
+  getChannelOrPlaylistVideos("channel", channelId, nextPageToken, channelLink);
 }
 
 function playlistLinkIframes(playlistLink, nextPageToken) {
   const playlistId = playlistLink.split("=")[1];
-  getChannelOrPlaylistVideos("playlist", playlistId, nextPageToken);
+  getChannelOrPlaylistVideos(
+    "playlist",
+    playlistId,
+    nextPageToken,
+    playlistLink
+  );
 }
 
 function videoLinkIframes(videoLink) {

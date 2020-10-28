@@ -28,7 +28,7 @@
 body {
   background: #d9e4dd;
 }
-
+/******************************* Header *******************************/
 header {
   background-color: #ff4b5c;
   display: flex;
@@ -64,6 +64,7 @@ h1 {
   font-family: var(--font-regular);
 }
 
+/******************************* Main *******************************/
 main {
   padding: 1px;
 }
@@ -120,4 +121,52 @@ main {
 
 .more:hover {
   box-shadow: 2.5px 2.2px 1px var(--box-shadow-color);
+}
+
+/******************************* 404-Error *******************************/
+.error-404-container {
+  position: fixed;
+  top: 2rem;
+  left: 0;
+  width: 100%;
+  transform: translateY(-200%);
+  transition: transform 0.5s;
+}
+.error-404 {
+  position: relative;
+  width: 65%;
+  margin: auto;
+  padding: 3em 2em 0.6em;
+  background-color: #214252;
+  color: white;
+  font-family: var(--font-light);
+  border-radius: var(--button-border-radius);
+  overflow-wrap: break-word;
+}
+
+.error-404 p {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+
+.error-404 .continue-next-link {
+  margin-top: 1rem;
+  font-size: 1rem;
+}
+
+.error-404-container.open {
+  transform: translateY(10%);
+}
+
+.close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  border: 0;
+  background-color: #ff4b5c;
+  color: white;
+  padding: 0.2em 0.5em;
+  border-radius: calc(var(--button-border-radius) - 4px);
+  cursor: pointer;
+  font-size: 1rem;
 }
