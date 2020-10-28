@@ -1,62 +1,95 @@
 const videoBtn = document.querySelector(".get-video-btn");
 const videoSection = document.querySelector(".videos");
+const moreBtn = document.querySelector(".more");
 const youtubeLinkRegex = /^(https:\/\/)?(www\.)?youtube\.com\/(watch\?v=\w|playlist\?list=\w|channel\/\w)/;
+const idList = [];
+let currentNextPageToken = null;
 
 videoBtn.addEventListener("click", handleVideoBtn);
+moreBtn.addEventListener("click", fetchVideos);
 
 function handleVideoBtn() {
   const inputValue = document.querySelector(".link-field").value;
   if (!inputValue.length) return;
+  currentNextPageToken = null;
 
-  videoLinks = inputValue.split(",");
-  videoLinks.forEach((videoLink) => {
-    videoLink = videoLink.trim();
-    let validBool = youtubeLinkRegex.test(videoLink);
+  inputLinks = inputValue.split(",");
+  inputLinks.forEach((inputLink) => {
+    inputLink = inputLink.trim();
+    let validBool = youtubeLinkRegex.test(inputLink);
     if (validBool) {
-      console.log(`YES: ${videoLink}`);
+      if (inputLink.includes("watch")) {
+        videoLinkIframes(inputLink);
+      } else if (inputLink.includes("playlist")) {
+        idList.push(["p", inputLink]);
+      } else if (inputLink.includes("channel")) {
+        idList.push(["c", inputLink]);
+      }
+      console.log(`YES: ${inputLink}`);
     } else {
-      console.log(`WRONG: ${videoLink}`);
+      console.log(`WRONG: ${inputLink}`);
     }
   });
-
-  // const playlist_id = inputValue.split("=")[1];
-
-  // async function get_playlist_video(playlist_id) {
-  //   const response = await fetch(
-  //     `http://localhost:5000/playlist?id=${playlist_id}`
-  //   );
-  //   const data = await response.json();
-  //   const videoIds = data.video_ids;
-  //   const nextPageToken = data.nextPageToken;
-  //   console.log(videoIds, nextPageToken);
-  //   videoIds.forEach((videoId) => {
-  //     const iframeHtml = `<div class="videoWrapper">
-  //                       <iframe width="560" height="315"
-  //                       src="https://www.youtube.com/embed/${videoId}"
-  //                       frameborder="0" allow="accelerometer; autoplay; clipboard-write;
-  //                       encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-  //                       </div>`;
-  //     const iframHtmlFragment = document
-  //       .createRange()
-  //       .createContextualFragment(iframeHtml);
-  //     videoSection.appendChild(iframHtmlFragment);
-  //   });
-  // }
-  // get_playlist_video(playlist_id);
+  console.log(idList);
+  fetchVideos();
 }
 
-// videoLinks = inputValue.value.split(",");
-// videoLinks.forEach((videoLink) => {
-//   videoLink = videoLink.trim();
-//   const videoId = videoLink.split("=")[1].split("&")[0];
-//   const iframeHtml = `<div class="videoWrapper">
-//                       <iframe width="560" height="315"
-//                       src="https://www.youtube.com/embed/${videoId}"
-//                       frameborder="0" allow="accelerometer; autoplay; clipboard-write;
-//                       encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-//                       </div>`;
-//   const iframHtmlFragment = document
-//     .createRange()
-//     .createContextualFragment(iframeHtml);
-//   videoSection.appendChild(iframHtmlFragment);
-// });
+function fetchVideos() {
+  if (idList.length < 1) return;
+  const categoryLink = idList[0];
+  if (categoryLink[0] === "p") {
+    playlistLinkIframes(categoryLink[1], currentNextPageToken);
+  } else {
+    channelLinkIframes(categoryLink[1], currentNextPageToken);
+  }
+}
+
+// Fetching and Creating Iframes
+async function getChannelOrPlaylistVideos(category, id, nextPageToken) {
+  const response = await fetch(
+    `http://localhost:5000/${category}?id=${id}&nextPageToken=${nextPageToken}`
+  );
+  const data = await response.json();
+  const videoIds = data.video_ids;
+  currentNextPageToken = data.nextPageToken;
+  videoIds.forEach((videoId) => {
+    const iframeHtml = `<div class="videoWrapper">
+                      <iframe width="560" height="315"
+                      src="https://www.youtube.com/embed/${videoId}"
+                      frameborder="0" allow="accelerometer; autoplay; clipboard-write;
+                      encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                      </div>`;
+    const iframHtmlFragment = document
+      .createRange()
+      .createContextualFragment(iframeHtml);
+    videoSection.appendChild(iframHtmlFragment);
+  });
+  console.log(currentNextPageToken);
+  currentNextPageToken
+    ? (moreBtn.style.display = "block")
+    : (moreBtn.style.display = "none");
+}
+
+function channelLinkIframes(channelLink, nextPageToken) {
+  const channelId = channelLink.split("/").slice(-1);
+  getChannelOrPlaylistVideos("channel", channelId, nextPageToken);
+}
+
+function playlistLinkIframes(playlistLink, nextPageToken) {
+  const playlistId = playlistLink.split("=")[1];
+  getChannelOrPlaylistVideos("playlist", playlistId, nextPageToken);
+}
+
+function videoLinkIframes(videoLink) {
+  const videoId = videoLink.split("=")[1].split("&")[0];
+  const iframeHtml = `<div class="videoWrapper">
+                        <iframe width="560" height="315"
+                        src="https://www.youtube.com/embed/${videoId}"
+                        frameborder="0" allow="accelerometer; autoplay; clipboard-write;
+                        encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>`;
+  const iframHtmlFragment = document
+    .createRange()
+    .createContextualFragment(iframeHtml);
+  videoSection.appendChild(iframHtmlFragment);
+}
