@@ -75,12 +75,19 @@ main {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
   gap: 20px;
+  row-gap: 60px;
 }
 
 .videoWrapper {
   position: relative;
   padding-bottom: 56.25%;
   height: 0;
+  transition: all 0.3s;
+}
+
+.videoWrapper.remove-video {
+  transform: translateY(-5rem);
+  opacity: 0;
 }
 
 .videoWrapper iframe {
@@ -90,6 +97,7 @@ main {
   width: 100%;
   height: 100%;
   border: 1px solid black;
+  transition: all 0.3s;
 }
 
 .videoWrapper p {
@@ -171,4 +179,26 @@ main {
   border-radius: calc(var(--button-border-radius) - 4px);
   cursor: pointer;
   font-size: 1rem;
+}
+
+.remove,
+.scale {
+  display: block;
+  width: 1.3rem;
+  height: 1.3rem;
+  border: none;
+  position: absolute;
+  cursor: pointer;
+}
+
+.remove {
+  background: url(./images/close.svg);
+  top: -1.5rem;
+  right: 0;
+}
+
+.scale {
+  background: url(./images/scale-screen.svg);
+  top: -1.5rem;
+  right: 2rem;
 }
