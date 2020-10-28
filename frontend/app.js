@@ -12,8 +12,9 @@ let invalidLinks = [];
 videoBtn.addEventListener("click", handleVideoBtn);
 moreBtn.addEventListener("click", fetchVideos);
 closeBtns.forEach((closeBtn) => {
-  closeBtn.addEventListener("click", handleCloseBtn);
+  closeBtn.addEventListener("click", handleErrorCloseBtn);
 });
+videoSection.addEventListener("click", handleVideoControls);
 
 function handleVideoBtn() {
   const inputField = document.querySelector(".link-field");
@@ -45,6 +46,22 @@ function handleVideoBtn() {
   fetchVideos();
 }
 
+// Handle video controls
+function handleVideoControls(e) {
+  if (e.target.classList.contains("remove")) {
+    const videoWrapper = e.target.closest(".videoWrapper");
+    videoWrapper.classList.add("remove-video");
+    videoWrapper.addEventListener(
+      "transitionend",
+      () => {
+        videoWrapper.remove();
+      },
+      { once: true }
+    );
+  }
+}
+
+// Fetching and Creating Iframes
 function fetchVideos() {
   if (idList.length < 1) return;
   const categoryLink = idList[0];
@@ -55,22 +72,6 @@ function fetchVideos() {
   }
 }
 
-function handleCloseBtn() {
-  error403Wrapper.classList.remove("open");
-  error404Wrapper.classList.remove("open");
-}
-
-function showInvalidLinks(iLinks) {
-  const errorEl = document.querySelector(".error-404-container");
-  const invalidLinksUl = document.querySelector(".invalid-link");
-  iLinks.forEach((inavlidLink) => {
-    invalidLinksUl.innerHTML += `<li>${inavlidLink}</li>`;
-  });
-  invalidLinks = [];
-  errorEl.classList.add("open");
-}
-
-// Fetching and Creating Iframes
 async function getChannelOrPlaylistVideos(
   category,
   id,
@@ -86,6 +87,8 @@ async function getChannelOrPlaylistVideos(
     currentNextPageToken = data.nextPageToken;
     videoIds.forEach((videoId) => {
       const iframeHtml = `<div class="videoWrapper">
+                      <button aria-label="Remove Video" class="remove" title="Remove video"></button>
+                      <button aria-label="Scale Video" class="scale" title="Scale video"></button>
                       <p>Loading...</p>
                       <iframe width="560" height="315"
                       src="https://www.youtube.com/embed/${videoId}"
@@ -147,4 +150,20 @@ function videoLinkIframes(videoLink) {
     .createRange()
     .createContextualFragment(iframeHtml);
   videoSection.appendChild(iframHtmlFragment);
+}
+
+// Handle Errors
+function handleErrorCloseBtn() {
+  error403Wrapper.classList.remove("open");
+  error404Wrapper.classList.remove("open");
+}
+
+function showInvalidLinks(iLinks) {
+  const errorEl = document.querySelector(".error-404-container");
+  const invalidLinksUl = document.querySelector(".invalid-link");
+  iLinks.forEach((inavlidLink) => {
+    invalidLinksUl.innerHTML += `<li>${inavlidLink}</li>`;
+  });
+  invalidLinks = [];
+  errorEl.classList.add("open");
 }
