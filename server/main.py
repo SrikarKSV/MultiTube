@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from get_videos import GetVideoId
 import os
+from flask_cors import cross_origin
 
 app = Flask(__name__)
 
@@ -11,6 +12,7 @@ def home():
 
 
 @app.route("/playlist")
+@cross_origin()
 def playlist():
     api_key = request.args.get("apikey")
     get_videos_id = (
@@ -22,6 +24,7 @@ def playlist():
 
 
 @app.route("/channel")
+@cross_origin()
 def channel():
     api_key = request.args.get("apikey")
     get_videos_id = (
