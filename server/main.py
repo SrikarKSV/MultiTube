@@ -20,6 +20,7 @@ def playlist():
     )
     playlist_id = request.args.get("id")
     next_page_token = request.args.get("nextPageToken")
+    next_page_token = None if next_page_token == "null" else next_page_token
     return jsonify(get_videos_id.get_playlist_videos(playlist_id, next_page_token))
 
 
@@ -32,6 +33,7 @@ def channel():
     )
     channel_id = request.args.get("id")
     next_page_token = request.args.get("nextPageToken")
+    next_page_token = None if next_page_token == "null" else next_page_token
     return jsonify(get_videos_id.get_channel_videos(channel_id, next_page_token))
 
 
