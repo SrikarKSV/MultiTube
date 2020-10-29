@@ -37,6 +37,28 @@ header {
   height: 45vh;
 }
 
+.github-code {
+  position: absolute;
+  top: -87px;
+  left: -40px;
+  font-size: 2rem;
+  background-color: black;
+  padding-top: 6rem;
+  transform: rotate(-44deg);
+  border-radius: 8px;
+  transition: transform 0.3s;
+}
+
+.github-code:hover {
+  transform: rotate(-44deg) translateY(1rem);
+}
+
+.github-code a {
+  padding: 0rem;
+  height: 100%;
+  margin-left: -0.5rem;
+}
+
 h1 {
   text-align: center;
   color: white;
@@ -66,6 +88,13 @@ h1 {
 }
 
 /******************************* Main *******************************/
+.main-container {
+  min-height: calc(100vh - 45vh);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 main {
   padding: 1px;
 }
@@ -210,6 +239,25 @@ main {
   right: 2rem;
 }
 
+/******************************* Footer *******************************/
+footer {
+  font-family: var(--font-light);
+  background-color: black;
+  color: white;
+  font-size: 1.2rem;
+  padding: 0.6rem;
+  display: flex;
+}
+
+i:first-of-type {
+  margin-left: 0.5rem;
+}
+
+i {
+  padding: 0.3em;
+  color: white;
+}
+
 /******************************* Media queries *******************************/
 @media screen and (max-width: 1040px) {
   .scale {
@@ -263,5 +311,15 @@ main {
 @media screen and (max-width: 400px) {
   .videoWrapper {
     padding-bottom: 43%;
+  }
+}
+
+@media screen and (max-width: 365px) {
+  footer {
+    flex-direction: column;
+  }
+
+  i:first-of-type {
+    margin: 0;
   }
 }
