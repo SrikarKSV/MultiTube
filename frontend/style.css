@@ -17,8 +17,8 @@
 :root {
   --font-size-header: 3rem;
   --font-size-body: 1.2rem;
-  --font-regular: "Gontserrat Regular";
-  --font-light: "Gontserrat Light";
+  --font-regular: "Gontserrat Regular", sans-serif;
+  --font-light: "Gontserrat Light", sans-serif;
   --text-field-width: 40rem;
   --button-bg: #fbf7f0;
   --button-border-radius: 8px;
@@ -85,8 +85,14 @@ main {
   transition: all 0.3s;
 }
 
+.videoWrapper.scale-video {
+  margin: 3rem auto;
+  padding-bottom: 45%;
+  width: 80vw;
+}
+
 .videoWrapper.remove-video {
-  transform: translateY(-5rem);
+  transform: scale(0.3);
   opacity: 0;
 }
 
