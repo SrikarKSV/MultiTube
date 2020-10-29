@@ -4,7 +4,7 @@ const closeBtns = document.querySelectorAll(".close");
 const error404Wrapper = document.querySelector(".error-404-container");
 const error403Wrapper = document.querySelector(".error-403-container");
 const moreBtn = document.querySelector(".more");
-const youtubeLinkRegex = /^(https:\/\/)?(www\.)?youtube\.com\/(watch\?v=\w|playlist\?list=\w|channel\/\w)/;
+const youtubeLinkRegex = /^(https:\/\/)?(www\.)?youtube\.com\/(watch\?v=\w|playlist\?list=\w|channel\/\w|user\/)/;
 let idList = [];
 let currentNextPageToken = null;
 let invalidLinks = [];
@@ -33,7 +33,7 @@ function handleVideoBtn(e) {
         videoLinkIframes(inputLink);
       } else if (inputLink.includes("playlist")) {
         idList.push(["p", inputLink]);
-      } else if (inputLink.includes("channel")) {
+      } else if (inputLink.includes("channel") || inputLink.includes("user")) {
         idList.push(["c", inputLink]);
       }
     } else {
