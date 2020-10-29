@@ -312,6 +312,9 @@ i {
   .videoWrapper {
     padding-bottom: 43%;
   }
+  .github-code {
+    font-size: 1.8rem;
+  }
 }
 
 @media screen and (max-width: 365px) {
@@ -319,7 +322,7 @@ i {
     flex-direction: column;
   }
 
-  i:first-of-type {
+  .socials i:first-of-type {
     margin: 0;
   }
 }
