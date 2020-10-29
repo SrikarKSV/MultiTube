@@ -34,7 +34,7 @@ header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 45vh;
+  height: 20rem;
 }
 
 .github-code {
@@ -89,7 +89,7 @@ h1 {
 
 /******************************* Main *******************************/
 .main-container {
-  min-height: calc(100vh - 45vh);
+  min-height: calc(100vh - 20rem);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
