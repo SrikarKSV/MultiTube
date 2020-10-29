@@ -11,16 +11,31 @@
 
 <body>
   <header>
+    <div class="github-code">
+      <a href="https://github.com/SrikarKSV/MultiTube" title="View code on Github" target="_blank"><i
+          class="fab fa-github icon"></i></a>
+    </div>
     <h1>Enter Video Links</h1>
     <form action="#" method="get">
       <input type="text" name="link" class="link-field" placeholder="https://www.youtube.com/watch?v=iik25wqIuFo">
       <button class="get-video-btn">Get videos</button>
     </form>
   </header>
-  <main>
-    <section class="videos"></section>
-    <button class="more" hidden>more</button>
-  </main>
+  <div class="main-container">
+    <main>
+      <section class="videos"></section>
+      <button class="more" hidden>more</button>
+    </main>
+    <footer>
+      <p>Made with 💗 by Srikar</p>
+      <div class="socials">
+        <a href="https://twitter.com/SrikarVks" title="Twitter" target="_blank"><i class="fab fa-twitter icon"></i></a>
+        <a href="https://github.com/SrikarKSV" title="Github" target="_blank"><i class="fab fa-github icon"></i></a>
+        <a href="https://www.instagram.com/srikar_vksblurryface/" title="Instagram" target="_blank"><i
+            class="fab fa-instagram icon"></i></a>
+      </div>
+    </footer>
+  </div>
   <section class="error-404-container">
     <div class="error-404">
       <button class="close">Close</button>
@@ -36,6 +51,10 @@
     </div>
   </section>
   <script src="./app.js"></script>
+  <!-- Font awesome cdn -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+    integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
+    crossorigin="anonymous" />
 </body>
 
 </html>
