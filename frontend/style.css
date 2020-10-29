@@ -54,9 +54,10 @@ h1 {
 }
 
 .get-video-btn {
+  display: block;
   border: 0;
   cursor: pointer;
-  margin-top: 2.8rem;
+  margin: 2.8rem auto 0;
   padding: 0.5em;
   background-color: var(--button-bg);
   border-radius: var(--button-border-radius);
