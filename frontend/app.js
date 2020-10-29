@@ -16,7 +16,8 @@ closeBtns.forEach((closeBtn) => {
 });
 videoSection.addEventListener("click", handleVideoControls);
 
-function handleVideoBtn() {
+function handleVideoBtn(e) {
+  e.preventDefault();
   const inputField = document.querySelector(".link-field");
   const inputValue = inputField.value;
   if (!inputValue.length) return;
@@ -176,3 +177,9 @@ function showInvalidLinks(iLinks) {
   invalidLinks = [];
   errorEl.classList.add("open");
 }
+
+window.addEventListener("keyup", (e) => {
+  if (e.key === "Escape") {
+    handleErrorCloseBtn();
+  }
+});
