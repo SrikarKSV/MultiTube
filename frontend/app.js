@@ -87,7 +87,7 @@ async function getChannelOrPlaylistVideos(
   directLink
 ) {
   const response = await fetch(
-    `http://localhost:5000/${category}?id=${id}&nextPageToken=${nextPageToken}`
+    `https://srikar18.pythonanywhere.com/${category}?id=${id}&nextPageToken=${nextPageToken}`
   );
   const data = await response.json();
   try {
