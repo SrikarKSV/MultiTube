@@ -35,9 +35,7 @@ function handleVideoBtn() {
       } else if (inputLink.includes("channel")) {
         idList.push(["c", inputLink]);
       }
-      console.log(`YES: ${inputLink}`);
     } else {
-      console.log(`WRONG: ${inputLink}`);
       invalidLinks.push(inputLink);
     }
   });
@@ -48,8 +46,8 @@ function handleVideoBtn() {
 
 // Handle video controls
 function handleVideoControls(e) {
+  const videoWrapper = e.target.closest(".videoWrapper");
   if (e.target.classList.contains("remove")) {
-    const videoWrapper = e.target.closest(".videoWrapper");
     videoWrapper.classList.add("remove-video");
     videoWrapper.addEventListener(
       "transitionend",
@@ -58,6 +56,15 @@ function handleVideoControls(e) {
       },
       { once: true }
     );
+  } else {
+    const videoWrapperClone = videoWrapper.cloneNode(true);
+    const scaleBtn = videoWrapperClone.querySelector(".scale");
+    const removeBtn = videoWrapperClone.querySelector(".remove");
+    removeBtn.addEventListener("click", handleVideoControls);
+    scaleBtn.remove();
+    videoWrapperClone.classList.add("scale-video");
+    const videoSection = videoWrapper.closest(".videos");
+    videoSection.insertAdjacentElement("beforebegin", videoWrapperClone);
   }
 }
 
@@ -116,7 +123,6 @@ async function getChannelOrPlaylistVideos(
       moreBtn.style.display = "block";
       currentNextPageToken = null;
       idList.shift();
-      console.log(idList);
     } else {
       moreBtn.style.display = "none";
     }
@@ -141,6 +147,9 @@ function playlistLinkIframes(playlistLink, nextPageToken) {
 function videoLinkIframes(videoLink) {
   const videoId = videoLink.split("=")[1].split("&")[0];
   const iframeHtml = `<div class="videoWrapper">
+                        <button aria-label="Remove Video" class="remove" title="Remove video"></button>
+                        <button aria-label="Scale Video" class="scale" title="Scale video"></button>
+                        <p>Loading...</p>
                         <iframe width="560" height="315"
                         src="https://www.youtube.com/embed/${videoId}"
                         frameborder="0" allow="accelerometer; autoplay; clipboard-write;
