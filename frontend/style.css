@@ -104,7 +104,6 @@ main {
   width: 100%;
   height: 100%;
   border: 1px solid black;
-  transition: all 0.3s;
 }
 
 .videoWrapper p {
@@ -188,6 +187,7 @@ main {
   font-size: 1rem;
 }
 
+/******************************* Video Controls *******************************/
 .remove,
 .scale {
   display: block;
@@ -208,4 +208,60 @@ main {
   background: url(./images/scale-screen.svg);
   top: -1.5rem;
   right: 2rem;
+}
+
+/******************************* Media queries *******************************/
+@media screen and (max-width: 1040px) {
+  .scale {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 670px) {
+  .link-field {
+    --text-field-width: 90vw;
+  }
+}
+
+@media screen and (max-width: 524px) {
+  h1 {
+    --font-size-header: 2.5rem;
+  }
+
+  .link-field {
+    padding: 0.15em;
+  }
+
+  .get-video-btn {
+    padding: 0.5em;
+    --font-size-body: 1.1rem;
+  }
+
+  .videos {
+    width: 100%;
+    padding: 0 0.7em;
+  }
+
+  .videoWrapper {
+    padding-bottom: 50%;
+    width: 95vw;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .videos {
+    width: 100%;
+    padding: 0;
+  }
+
+  .videoWrapper {
+    padding-bottom: 45%;
+    width: 100vw;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .videoWrapper {
+    padding-bottom: 43%;
+  }
 }
