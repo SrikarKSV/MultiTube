@@ -4,7 +4,7 @@ const closeBtns = document.querySelectorAll(".close");
 const error404Wrapper = document.querySelector(".error-404-container");
 const error403Wrapper = document.querySelector(".error-403-container");
 const moreBtn = document.querySelector(".more");
-const youtubeLinkRegex = /^(https:\/\/)?(www\.)?youtube\.com\/(watch\?v=\w|playlist\?list=\w|channel\/\w|user\/)/;
+const youtubeLinkRegex = /^(https:\/\/)?(www\.)?(m\.)?youtube\.com\/(watch\?v=\w|playlist\?list=\w|channel\/\w|user\/\w)/;
 let idList = [];
 let currentNextPageToken = null;
 let invalidLinks = [];
