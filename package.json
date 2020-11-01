@@ -1,0 +1,26 @@
+{
+  "name": "multitube",
+  "version": "1.0.0",
+  "description": "Watch all the videos of a youtube playlist/channel or multiple videos or mix of both in single page!",
+  "main": "index.html",
+  "scripts": {
+    "start": "parcel ./frontend/index.html",
+    "build": "parcel build ./frontend/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SrikarKSV/MultiTube.git"
+  },
+  "author": "Srikar KSV",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SrikarKSV/MultiTube/issues"
+  },
+  "homepage": "https://github.com/SrikarKSV/MultiTube#readme",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4"
+  },
+  "browserslist": [
+    "last 1 chrome versions"
+  ]
+}

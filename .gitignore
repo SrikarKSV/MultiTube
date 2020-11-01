@@ -1,0 +1,8 @@
+venv
+.vscode
+__pycache__
+node_modules
+dist
+.cache
+.parcel-cache
+.DS_Store
