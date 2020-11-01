@@ -6,12 +6,12 @@
 
 @font-face {
   font-family: "Gontserrat Light";
-  src: url(./fonts/Gontserrat-Light.ttf);
+  src: url(../fonts/Gontserrat-Light.ttf);
 }
 
 @font-face {
   font-family: "Gontserrat Regular";
-  src: url(./fonts/Gontserrat-Regular.ttf);
+  src: url(../fonts/Gontserrat-Regular.ttf);
 }
 
 :root {
@@ -228,13 +228,13 @@ main {
 }
 
 .remove {
-  background: url(./images/close.svg);
+  background: url(../images/close.svg);
   top: -1.5rem;
   right: 0;
 }
 
 .scale {
-  background: url(./images/scale-screen.svg);
+  background: url(../images/scale-screen.svg);
   top: -1.5rem;
   right: 2rem;
 }
