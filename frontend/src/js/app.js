@@ -4,6 +4,7 @@ const closeBtns = document.querySelectorAll(".close");
 const error404Wrapper = document.querySelector(".error-404-container");
 const error403Wrapper = document.querySelector(".error-403-container");
 const moreBtn = document.querySelector(".more");
+const loaders = document.querySelectorAll(".loader");
 const youtubeLinkRegex = /^(https:\/\/)?(www\.)?(m\.)?youtube\.com\/(watch\?v=\w|playlist\?list=\w|channel\/\w|user\/\w)/;
 let idList = [];
 let currentNextPageToken = null;
@@ -86,6 +87,10 @@ async function getChannelOrPlaylistVideos(
   nextPageToken,
   directLink
 ) {
+  // turn loader on
+  loaders.forEach((loader) => {
+    loader.classList.remove("hidden");
+  });
   const response = await fetch(
     `https://srikar18.pythonanywhere.com/${category}?id=${id}&nextPageToken=${nextPageToken}`
   );
@@ -128,6 +133,10 @@ async function getChannelOrPlaylistVideos(
       moreBtn.style.display = "none";
     }
   }
+  // turn the loader off
+  loaders.forEach((loader) => {
+    loader.classList.add("hidden");
+  });
 }
 
 function channelLinkIframes(channelLink, nextPageToken) {
