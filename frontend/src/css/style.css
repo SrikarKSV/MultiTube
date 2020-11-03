@@ -1,4 +1,5 @@
 @import "./errors.css";
+@import "./loading-animation.css";
 
 * {
   margin: 0;
