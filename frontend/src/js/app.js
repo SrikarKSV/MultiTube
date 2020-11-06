@@ -25,7 +25,7 @@ function handleVideoBtn(e) {
   currentNextPageToken = null;
   idList = [];
 
-  inputLinks = inputValue.split(",");
+  const inputLinks = inputValue.split(",");
   inputLinks.forEach((inputLink) => {
     inputLink = inputLink.trim();
     let validBool = youtubeLinkRegex.test(inputLink);
