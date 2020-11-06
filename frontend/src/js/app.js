@@ -192,3 +192,5 @@ window.addEventListener("keyup", (e) => {
     handleErrorCloseBtn();
   }
 });
+
+import "regenerator-runtime/runtime";
