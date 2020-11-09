@@ -16,6 +16,9 @@ You can provide it:
 - Multiple playlist links
 - Multiple channel links
 - Any mix of the above
+- Links are validated upon submission
+- Invalid links are alerted to the user
+- Users will be alerted if there was an error at the server
 - Remove any video you don't want
 - Scale any video for better view
 
