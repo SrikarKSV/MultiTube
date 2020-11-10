@@ -35,16 +35,18 @@ function handleVideoBtn(e) {
     // Skipping if empty string provided
     if (!inputLink.length) return;
     let validBool = youtubeLinkRegex.test(inputLink);
-    // Checking if the link is already entered
-    if (allVideoLinks.includes(inputLink)) {
-      duplicateLinks.includes(inputLink)
-        ? null
-        : duplicateLinks.push(inputLink);
-      return;
-    } else {
-      allVideoLinks.push(inputLink);
-    }
     if (validBool) {
+      // Checking if the link is already entered
+      if (allVideoLinks.includes(inputLink)) {
+        duplicateLinks.includes(inputLink)
+          ? null
+          : duplicateLinks.push(inputLink);
+        return;
+      } else {
+        allVideoLinks.push(inputLink);
+      }
+
+      // Distributing the links into their categories
       if (inputLink.includes("watch")) {
         videoLinkIframes(inputLink);
       } else if (inputLink.includes("playlist")) {
@@ -127,6 +129,11 @@ async function getChannelOrPlaylistVideos(
     // If it is a wrong link
     if (Number(errorCode) === 404) {
       showInvalidLinks([directLink]);
+      // Invalid links is removed from all videos list
+      const invalidLinkIndex = allVideoLinks.findIndex(
+        (allVideoLink) => allVideoLink === directLink
+      );
+      allVideoLinks.splice(invalidLinkIndex, 1);
       idList.unshift();
     } else {
       // Else it is a server error
@@ -206,7 +213,9 @@ function showInvalidLinks(iLinks) {
     invalidLinksContainer.classList.remove("hidden");
     const invalidLinksUl = document.querySelector(".invalid-link");
     // Clearing old links
-    invalidLinksUl.innerHTML = "";
+    if (!errorEl.classList.contains("open")) {
+      invalidLinksUl.innerHTML = "";
+    }
     iLinks.forEach((inavlidLink) => {
       invalidLinksUl.innerHTML += `<li>${inavlidLink}</li>`;
     });
