@@ -57,7 +57,9 @@ function handleVideoBtn(e) {
     }
   });
   inputField.value = "";
-  invalidLinks.length || duplicateLinks.length ? showInvalidLinks() : null;
+  invalidLinks.length || duplicateLinks.length
+    ? showInvalidLinks(invalidLinks)
+    : null;
   fetchVideos();
 }
 
@@ -114,15 +116,7 @@ async function getChannelOrPlaylistVideos(
     const videoIds = data.video_ids;
     currentNextPageToken = data.nextPageToken;
     videoIds.forEach((videoId) => {
-      const iframeHtml = `<div class="videoWrapper">
-                      <button aria-label="Remove Video" class="remove" title="Remove video"></button>
-                      <button aria-label="Scale Video" class="scale" title="Scale video"></button>
-                      <p>Loading...</p>
-                      <iframe width="560" height="315"
-                      src="https://www.youtube.com/embed/${videoId}"
-                      frameborder="0" allow="accelerometer; autoplay; clipboard-write;
-                      encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                      </div>`;
+      const iframeHtml = embedVideoId(videoId);
       const iframHtmlFragment = document
         .createRange()
         .createContextualFragment(iframeHtml);
@@ -130,10 +124,12 @@ async function getChannelOrPlaylistVideos(
     });
   } catch {
     const errorCode = data.error;
+    // If it is a wrong link
     if (Number(errorCode) === 404) {
       showInvalidLinks([directLink]);
       idList.unshift();
     } else {
+      // Else it is a server error
       error403Wrapper.classList.add("open");
     }
   }
@@ -171,19 +167,23 @@ function playlistLinkIframes(playlistLink, nextPageToken) {
 
 function videoLinkIframes(videoLink) {
   const videoId = videoLink.split("=")[1].split("&")[0];
-  const iframeHtml = `<div class="videoWrapper">
-                        <button aria-label="Remove Video" class="remove" title="Remove video"></button>
-                        <button aria-label="Scale Video" class="scale" title="Scale video"></button>
-                        <p>Loading...</p>
-                        <iframe width="560" height="315"
-                        src="https://www.youtube.com/embed/${videoId}"
-                        frameborder="0" allow="accelerometer; autoplay; clipboard-write;
-                        encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                        </div>`;
+  const iframeHtml = embedVideoId(videoId);
   const iframHtmlFragment = document
     .createRange()
     .createContextualFragment(iframeHtml);
   videoSection.appendChild(iframHtmlFragment);
+}
+
+function embedVideoId(videoId) {
+  return `<div class="videoWrapper">
+  <button aria-label="Remove Video" class="remove" title="Remove video"></button>
+  <button aria-label="Scale Video" class="scale" title="Scale video"></button>
+  <p>Loading...</p>
+  <iframe width="560" height="315"
+  src="https://www.youtube.com/embed/${videoId}"
+  frameborder="0" allow="accelerometer; autoplay; clipboard-write;
+  encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>`;
 }
 
 // Handle Errors
@@ -198,13 +198,16 @@ function removeInvalidLinks() {
   duplicateLinksContainer.classList.add("hidden");
 }
 
-function showInvalidLinks() {
+// This function called at 2 scenarios, one is if there is an invalid link
+// at input or playlist link was wrong and second is when duplicate links are entered
+function showInvalidLinks(iLinks) {
   const errorEl = document.querySelector(".error-404-container");
-  if (invalidLinks.length >= 1) {
+  if (iLinks.length >= 1) {
     invalidLinksContainer.classList.remove("hidden");
     const invalidLinksUl = document.querySelector(".invalid-link");
+    // Clearing old links
     invalidLinksUl.innerHTML = "";
-    invalidLinks.forEach((inavlidLink) => {
+    iLinks.forEach((inavlidLink) => {
       invalidLinksUl.innerHTML += `<li>${inavlidLink}</li>`;
     });
     invalidLinks = [];
@@ -212,6 +215,7 @@ function showInvalidLinks() {
   if (duplicateLinks.length >= 1) {
     duplicateLinksContainer.classList.remove("hidden");
     const duplicateLinksUl = document.querySelector(".duplicate-link");
+    // Clearing old links
     duplicateLinksUl.innerHTML = "";
     duplicateLinks.forEach((duplicateLink) => {
       duplicateLinksUl.innerHTML += `<li>${duplicateLink}</li>`;
@@ -221,6 +225,7 @@ function showInvalidLinks() {
   errorEl.classList.add("open");
 }
 
+// Error alert window will be closed
 window.addEventListener("keyup", (e) => {
   if (e.key === "Escape") {
     handleErrorCloseBtn();
