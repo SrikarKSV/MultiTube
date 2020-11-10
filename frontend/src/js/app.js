@@ -32,6 +32,8 @@ function handleVideoBtn(e) {
   const inputLinks = inputValue.split(",");
   inputLinks.forEach((inputLink) => {
     inputLink = inputLink.trim();
+    // Skipping if empty string provided
+    if (!inputLink.length) return;
     let validBool = youtubeLinkRegex.test(inputLink);
     // Checking if the link is already entered
     if (allVideoLinks.includes(inputLink)) {
@@ -203,11 +205,7 @@ function showInvalidLinks() {
     const invalidLinksUl = document.querySelector(".invalid-link");
     invalidLinksUl.innerHTML = "";
     invalidLinks.forEach((inavlidLink) => {
-      invalidLinksUl.innerHTML += `<li>${
-        inavlidLink.length
-          ? inavlidLink
-          : "No value (Can happen when no value is there between 2 ',' or after)"
-      }</li>`;
+      invalidLinksUl.innerHTML += `<li>${inavlidLink}</li>`;
     });
     invalidLinks = [];
   }
@@ -216,11 +214,7 @@ function showInvalidLinks() {
     const duplicateLinksUl = document.querySelector(".duplicate-link");
     duplicateLinksUl.innerHTML = "";
     duplicateLinks.forEach((duplicateLink) => {
-      duplicateLinksUl.innerHTML += `<li>${
-        duplicateLink.length
-          ? duplicateLink
-          : "No value (Can happen when no value is there between 2 ',' or after)"
-      }</li>`;
+      duplicateLinksUl.innerHTML += `<li>${duplicateLink}</li>`;
     });
     duplicateLinks = [];
   }
