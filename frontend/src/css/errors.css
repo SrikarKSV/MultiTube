@@ -34,6 +34,15 @@
   transform: translateY(10%);
 }
 
+.invalid-link,
+.duplicate-link {
+  padding: 0.1em 1.3em;
+}
+
+.duplicate-links {
+  margin-top: 0.5rem;
+}
+
 .close {
   position: absolute;
   top: 1rem;
