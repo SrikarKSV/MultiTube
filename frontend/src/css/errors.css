@@ -10,12 +10,14 @@
 .error-404 {
   position: relative;
   width: 65%;
+  max-height: 85vh;
   margin: auto;
   padding: 3em 2em 0.6em;
   background-color: #214252;
   color: white;
   font-family: var(--font-light);
   border-radius: var(--button-border-radius);
+  overflow: auto;
   overflow-wrap: break-word;
 }
 
@@ -31,12 +33,17 @@
 
 .error-404-container.open,
 .error-403-container.open {
-  transform: translateY(10%);
+  transform: translateY(1%);
 }
 
 .invalid-link,
 .duplicate-link {
-  padding: 0.1em 1.3em;
+  padding: 0 1.3em;
+}
+
+.invalid-link > li,
+.duplicate-link > li {
+  line-height: 1.5rem;
 }
 
 .duplicate-links {

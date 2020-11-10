@@ -5,7 +5,11 @@ const error404Wrapper = document.querySelector(".error-404-container");
 const error403Wrapper = document.querySelector(".error-403-container");
 const moreBtn = document.querySelector(".more");
 const loaders = document.querySelectorAll(".loader");
+const invalidLinksContainer = document.querySelector(".invalid-links");
+const duplicateLinksContainer = document.querySelector(".duplicate-links");
 const youtubeLinkRegex = /^(https:\/\/)?(www\.)?(m\.)?youtube\.com\/(watch\?v=\w|playlist\?list=\w|channel\/\w|user\/\w)/;
+const allVideoLinks = [];
+let duplicateLinks = [];
 let idList = [];
 let currentNextPageToken = null;
 let invalidLinks = [];
@@ -29,6 +33,15 @@ function handleVideoBtn(e) {
   inputLinks.forEach((inputLink) => {
     inputLink = inputLink.trim();
     let validBool = youtubeLinkRegex.test(inputLink);
+    // Checking if the link is already entered
+    if (allVideoLinks.includes(inputLink)) {
+      duplicateLinks.includes(inputLink)
+        ? null
+        : duplicateLinks.push(inputLink);
+      return;
+    } else {
+      allVideoLinks.push(inputLink);
+    }
     if (validBool) {
       if (inputLink.includes("watch")) {
         videoLinkIframes(inputLink);
@@ -42,7 +55,7 @@ function handleVideoBtn(e) {
     }
   });
   inputField.value = "";
-  invalidLinks.length >= 1 && showInvalidLinks(invalidLinks);
+  invalidLinks.length || duplicateLinks.length ? showInvalidLinks() : null;
   fetchVideos();
 }
 
@@ -175,15 +188,42 @@ function videoLinkIframes(videoLink) {
 function handleErrorCloseBtn() {
   error403Wrapper.classList.remove("open");
   error404Wrapper.classList.remove("open");
+  setTimeout(removeInvalidLinks, 500);
 }
 
-function showInvalidLinks(iLinks) {
+function removeInvalidLinks() {
+  invalidLinksContainer.classList.add("hidden");
+  duplicateLinksContainer.classList.add("hidden");
+}
+
+function showInvalidLinks() {
   const errorEl = document.querySelector(".error-404-container");
-  const invalidLinksUl = document.querySelector(".invalid-link");
-  iLinks.forEach((inavlidLink) => {
-    invalidLinksUl.innerHTML += `<li>${inavlidLink}</li>`;
-  });
-  invalidLinks = [];
+  if (invalidLinks.length >= 1) {
+    invalidLinksContainer.classList.remove("hidden");
+    const invalidLinksUl = document.querySelector(".invalid-link");
+    invalidLinksUl.innerHTML = "";
+    invalidLinks.forEach((inavlidLink) => {
+      invalidLinksUl.innerHTML += `<li>${
+        inavlidLink.length
+          ? inavlidLink
+          : "No value (Can happen when no value is there between 2 ',' or after)"
+      }</li>`;
+    });
+    invalidLinks = [];
+  }
+  if (duplicateLinks.length >= 1) {
+    duplicateLinksContainer.classList.remove("hidden");
+    const duplicateLinksUl = document.querySelector(".duplicate-link");
+    duplicateLinksUl.innerHTML = "";
+    duplicateLinks.forEach((duplicateLink) => {
+      duplicateLinksUl.innerHTML += `<li>${
+        duplicateLink.length
+          ? duplicateLink
+          : "No value (Can happen when no value is there between 2 ',' or after)"
+      }</li>`;
+    });
+    duplicateLinks = [];
+  }
   errorEl.classList.add("open");
 }
 
