@@ -4,7 +4,7 @@ MultiTube is a web app made to *watch all the YoutTube videos of a playlist/chan
 
 Check it out here: [MultiTube](https://getmultitube.netlify.app/)
 
-![Screenshot of MultiTube](https://i.imgur.com/F5m2NHA.png)
+![Demo of MultiTube](./.github/demo.gif)
 
 You can provide a list of video links, playlist links or channel links or mix of all of them! With a click of a few buttons all of the videos from that playlist or channel can be viewed on same page, no more opening 10 tabs to keep a list of all the videos you want to watch in an evening.
 
@@ -19,6 +19,7 @@ You can provide it:
 - Links are validated upon submission
 - Invalid links are alerted to the user
 - Users will be alerted if there was an error at the server
+- Users will be alerted if duplicate links are provided
 - Remove any video you don't want
 - Scale any video for better view
 
