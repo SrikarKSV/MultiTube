@@ -3,6 +3,8 @@ const videoSection = document.querySelector(".videos");
 const closeBtns = document.querySelectorAll(".close");
 const error404Wrapper = document.querySelector(".error-404-container");
 const error403Wrapper = document.querySelector(".error-403-container");
+const infoWrapper = document.querySelector(".info");
+const showInfoBtn = document.querySelector(".show-info");
 const moreBtn = document.querySelector(".more");
 const loaders = document.querySelectorAll(".loader");
 const invalidLinksContainer = document.querySelector(".invalid-links");
@@ -197,6 +199,7 @@ function embedVideoId(videoId) {
 function handleErrorCloseBtn() {
   error403Wrapper.classList.remove("open");
   error404Wrapper.classList.remove("open");
+  infoWrapper.classList.remove("open");
   setTimeout(removeInvalidLinks, 500);
 }
 
@@ -233,6 +236,10 @@ function showInvalidLinks(iLinks) {
   }
   errorEl.classList.add("open");
 }
+
+showInfoBtn.addEventListener("click", () => {
+  infoWrapper.classList.toggle("open");
+});
 
 // Error alert window will be closed
 window.addEventListener("keyup", (e) => {

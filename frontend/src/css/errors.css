@@ -1,5 +1,6 @@
 .error-404-container,
-.error-403-container {
+.error-403-container,
+.info {
   position: fixed;
   top: 2rem;
   left: 0;
@@ -7,6 +8,22 @@
   transform: translateY(-200%);
   transition: transform 0.5s;
 }
+
+.show-info {
+  cursor: pointer;
+  position: fixed;
+  top: 5px;
+  right: 5px;
+  background-color: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--button-bg);
+}
+
+.info a {
+  color: #fff;
+}
+
 .error-404 {
   position: relative;
   width: 65%;
@@ -32,7 +49,8 @@
 }
 
 .error-404-container.open,
-.error-403-container.open {
+.error-403-container.open,
+.info.open {
   transform: translateY(1%);
 }
 
