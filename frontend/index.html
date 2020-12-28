@@ -37,7 +37,8 @@
         <div class="lds-ripple loader hidden">
           <div></div>
           <div></div>
-        </div></button>
+        </div>
+      </button>
     </form>
   </header>
   <div class="main-container">
@@ -47,9 +48,29 @@
         <div class="lds-ripple loader hidden">
           <div></div>
           <div></div>
-        </div></button>
+        </div>
       </button>
     </main>
+    <section class="error-404-container">
+      <div class="error-404">
+        <button class="close">Close</button>
+        <div class="invalid-links hidden">
+          <p>⭐These link(s) is/are invalid: </p>
+          <ul class="invalid-link"></ul>
+        </div>
+        <div class="duplicate-links hidden">
+          <p>⭐Below link(s) is/are not rendered as they are duplicates: </p>
+          <ul class="duplicate-link"></ul>
+        </div>
+        <p class="continue-next-link">We will continue loading the remaining links(if provided).</p>
+      </div>
+    </section>
+    <section class="error-403-container">
+      <div class="error-404">
+        <button class="close">Close</button>
+        <p>There was an error at our servers. Please comeback later.</p>
+      </div>
+    </section>
     <footer>
       <p>Made with ❤️ by Srikar</p>
       <div class="socials">
@@ -60,26 +81,6 @@
       </div>
     </footer>
   </div>
-  <section class="error-404-container">
-    <div class="error-404">
-      <button class="close">Close</button>
-      <div class="invalid-links hidden">
-        <p>⭐These link(s) is/are invalid: </p>
-        <ul class="invalid-link"></ul>
-      </div>
-      <div class="duplicate-links hidden">
-        <p>⭐Below link(s) is/are not rendered as they are duplicates: </p>
-        <ul class="duplicate-link"></ul>
-      </div>
-      <p class="continue-next-link">We will continue loading the remaining links(if provided).</p>
-    </div>
-  </section>
-  <section class="error-403-container">
-    <div class="error-404">
-      <button class="close">Close</button>
-      <p>There was an error at our servers. Please comeback later.</p>
-    </div>
-  </section>
   <script src="./src/js/app.js"></script>
   <!-- Font awesome cdn -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
