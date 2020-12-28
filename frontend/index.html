@@ -26,8 +26,8 @@
 <body>
   <header>
     <div class="github-code">
-      <a href="https://github.com/SrikarKSV/MultiTube" title="View code and examples on Github" target="_blank"><i
-          class="fab fa-github icon"></i></a>
+      <a aria-label="Open project on GitHub" href="https://github.com/SrikarKSV/MultiTube"
+        title="View code and examples on Github" target="_blank"><i class="fab fa-github icon"></i></a>
     </div>
     <h1>Enter Video Links</h1>
     <form action="#" method="get">
@@ -40,6 +40,7 @@
         </div>
       </button>
     </form>
+    <button tabindex="1" title="Show instructions" class="show-info"><i class="fas fa-info-circle"></i></button>
   </header>
   <div class="main-container">
     <main>
@@ -71,13 +72,37 @@
         <p>There was an error at our servers. Please comeback later.</p>
       </div>
     </section>
+    <section class="info">
+      <div class="error-404">
+        <button class="close">Close</button>
+        <p>You can enter YouTube links of:</p>
+        <ul>
+          <li>Individual videos</li>
+          <li>Playlist</li>
+          <li>Channel</li>
+          <li>Or you can enter comma-separated links of any of the above</li>
+          <p class="continue-next-link">Ex: https://youtube.com/watch?v=8rD9amRSOQY,
+            youtube.com/playlist?list=PLu8EoSxDXHP5CIFvt9-ze3IngcdAc2xKG,
+            www.youtube.com/channel/UCCezIgC97PvUuR4_gbFUs5g</p>
+        </ul>
+        <p class="continue-next-link">Note: YouTue channel link of only these patterns are accepted:</p>
+        <ul>
+          <li>youtube.com/channel/*channel_id*</li>
+          <li>youtube.com/user/*user_name*</li>
+        </ul>
+        <p class="continue-next-link">For more information visit: <a href="https://github.com/SrikarKSV/MultiTube"
+            target="_blank">github.com/SrikarKSV/MultiTube</a></p>
+      </div>
+    </section>
     <footer>
       <p>Made with ❤️ by Srikar</p>
       <div class="socials">
-        <a href="https://twitter.com/SrikarVks" title="Twitter" target="_blank"><i class="fab fa-twitter icon"></i></a>
-        <a href="https://github.com/SrikarKSV" title="Github" target="_blank"><i class="fab fa-github icon"></i></a>
-        <a href="https://www.instagram.com/srikar_vksblurryface/" title="Instagram" target="_blank"><i
-            class="fab fa-instagram icon"></i></a>
+        <a aria-label="Find me on GitHub" href="https://twitter.com/SrikarVks" title="Twitter" target="_blank"><i
+            class="fab fa-twitter icon"></i></a>
+        <a aria-label="Find me on Twitter" href="https://github.com/SrikarKSV" title="Github" target="_blank"><i
+            class="fab fa-github icon"></i></a>
+        <a aria-label="Find me on Instagram" href="https://www.instagram.com/srikar_vksblurryface/" title="Instagram"
+          target="_blank"><i class="fab fa-instagram icon"></i></a>
       </div>
     </footer>
   </div>
